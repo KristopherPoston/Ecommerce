@@ -1,0 +1,41 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  
+  <h2 class = "blackHeader"> Add a listing to your watchlist: </h2>
+
+  <form action = "{% url 'addWatchList'%}", method = "POST">
+    {% csrf_token %}
+   <input type = "text" name = "title" placeholder="Enter title">
+   <button type = "submit" > Add to Watchlist </button>
+ </form>
+
+ <h2 class = "blackHeader"> My Watchlist </h2>
+ <div>
+
+    
+        {% for model in watchlist%}
+        <ul id = "list">
+            <li>
+        <div class = "indexSecondaryDiv" style = "border : 2px solid black">
+            <img src = "{{ model.auction.image_url }}" class = "indexImg">
+            <div class = "innerIndexDiv" style = "color: black">
+                <h3> {{ model.auction.title }} </h3>
+                <p> {{ model.auction.description }} </p> 
+                <a href="{%  }">{{ model.title }}</a>
+                <form action="{% url 'removeWatchList' %}" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="title" value="{{ model.auction.title }}">
+                  <button type="submit">Remove from Watchlist</button>
+              </form>
+            </div>
+        </div>
+                
+         </li>
+        </ul>
+        {% endfor %}
+    
+
+</div>
+
+{% endblock %}

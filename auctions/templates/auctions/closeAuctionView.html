@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% if closed_auctions %}
+     <div id="RenameTesting">
+        <ul id="list">
+            {% for model in closed_auctions %}
+            <li>
+            <div class="indexSecondaryDiv" style="display: flex; flex-direction: row; gap: 50px; border: 2px solid lightgray; color: black;">
+                <div class="innerIndexDiv">
+                    <textarea id="auctionDescription" name="description" rows="4" cols="50" style="position:relative; top: 30 ; background-color: dark; left: 0px ; width: 500px; height: 200px; border: 1px solid black; padding: 10px;">{{ model.description }}</textarea>
+                </div>
+                <div class="innerIndexDiv">
+                    <h3 class="listTitle">{{ model.title }}</h3>
+                    <a class="listTitle" href="{% url 'Listing' model.id %}">{{ model.title }}</a>
+                    <p>Winning Bid: {{ model.current_price }}</p>
+                </div>
+                <div class="listingImageContainer">
+                    <img src="{{ model.image_url }}" class="listingImage">
+                </div>
+              </div>
+             </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <h1> {{ message }} </h1>
+    {% endif %}
+
+{% endblock %}
+
+

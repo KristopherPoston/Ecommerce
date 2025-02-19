@@ -1,0 +1,7 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>Error</h1>
+    <p>{{ message }}</p>
+    <a href="{% url 'index' %}">Go back to auction listings</a>
+{% endblock %}

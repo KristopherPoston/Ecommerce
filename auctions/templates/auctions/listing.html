@@ -1,0 +1,56 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+
+
+        
+
+
+<h2 class = "auctionTitle"> {{ title }} </h2>
+
+<hr style = "border-color:lightgray;">
+  
+<p id = "listingDescription">{{ description }}</p>
+
+
+
+
+<div id = "listingDiv">
+
+<img class = "imageViewSingle" src= "{{ url }}" alt="Image">
+
+<div class = "auctionSingleView">
+<form action="{% if auction in watchlist %}{% url 'removeWatchList' %}{% else %}{% url 'addWatchList' %}{% endif %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="title" value="{{ auction.title }}">
+    <button type="submit">
+        {% if auction in watchlist %}
+            Remove from watchlist
+        {% else %}
+            Add to watchlist
+        {% endif %}
+    </button>
+</form>
+
+<form action="{% url 'closeAuction' %}" method = "POST">
+{% csrf_token %}
+
+<input type="hidden" name="title" value="{{ title }}">
+
+{% if request.user == auction.user %}
+<button type = "submit"> Close </button>
+{% endif %}
+
+</form>
+
+<form action="{% url 'submitBid' %}" method="POST">
+  {% csrf_token %}
+  <input type="number" name="bid" placeholder="Enter Bid" required>
+  <input type="hidden" name="title" value="{{ auction.title }}">
+  <button type="submit">Submit</button>
+</form>
+   
+
+
+{% endblock %}

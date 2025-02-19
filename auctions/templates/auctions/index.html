@@ -1,0 +1,42 @@
+{% extends "auctions/layout.html" %}
+{% load static %} 
+
+{% block body %}
+
+  {% load static %}
+  <div id="react-root"></div>
+  <script src="{% static 'auctions/js/bundle.js' %}"></script>
+   
+    
+
+    <h2 id="act">Active Listings</h2>
+
+    <a href="{% url 'createList' %}">Create Listing</a>
+
+    {% if auctions %}
+     <div id="RenameTesting">
+        <ul id="list">
+            {% for model in auctions %}
+            <li>
+            <div class="indexSecondaryDiv" style="display: flex; flex-direction: row; gap: 50px; border: 2px solid lightgray; color: black;">
+                <div class="innerIndexDiv">
+                    <textarea id="auctionDescription" name="description" rows="4" cols="50" style="position:relative; top: 30 ; background-color: dark; left: 0px ; width: 500px; height: 200px; border: 1px solid black; padding: 10px;">{{ model.description }}</textarea>
+                </div>
+                <div class="innerIndexDiv">
+                    <h3 class="listTitle">{{ model.title }}</h3>
+                    <a class="listTitle" href="{% url 'Listing' model.id %}">{{ model.title }}</a>
+                    <p>Current Price: {{ model.current_price }}</p>
+                </div>
+                <div class="listingImageContainer">
+                    <img src="{{ model.image_url }}" class="listingImage">
+                </div>
+              </div>
+             </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+        <p>No active listings available at this moment.</p>
+    {% endif %}
+  
+{% endblock %}
